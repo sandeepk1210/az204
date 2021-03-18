@@ -1,0 +1,55 @@
+using Microsoft.Identity.Client;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.Graph;
+using Microsoft.Graph.Auth;
+
+
+
+public class Program {
+    private const string _cliendId = "262e0e3f-dc3a-44a4-ac07-8ff25c8d86f0";
+    private const string _tenantId = "e90e2b30-e017-4a94-b002-4b5983365458";
+    public static async Task Main(string[] args){
+        IPublicClientApplication app;
+
+        //Build a client application.
+        app = PublicClientApplicationBuilder
+        .Create(_cliendId)
+        .WithAuthority(AzureCloudInstance.AzurePublic, _tenantId)
+        .WithRedirectUri("http://localhost")
+        .Build();
+        
+        List<string> scopes = new List<string> { "user.read" };
+        /* AuthenticationResult result;
+
+        result = await app.AcquireTokenInteractive(scopes)
+        .ExecuteAsync();
+
+        Console.WriteLine($"Token:\t{result.AccessToken}"); */
+
+        /*
+        Microsoft Graph is a RESTful web API that enables you to access MS Cloud service resources.
+        After you register your app and get authentication tokesn for a user or service, you can make requets to the MS Group API
+
+        Offers single endpoing https://graph.microsoft.com
+        can use REST APIs or SDKs to access the endpoint 
+
+        */
+
+        //Create an authentication provider by passing in a client application and graph scopes.
+        DeviceCodeProvider provider = new DeviceCodeProvider(app, scopes);
+
+        //Create a new instance of GraphServiceClient with the authentication provier.
+        GraphServiceClient graphClient = new GraphServiceClient(provider);
+
+        //Graph SDK query
+        User myProfile = await graphClient.Me
+        .Request()
+        .GetAsync();
+
+        Console.WriteLine($"Name:\t{myProfile.DisplayName}");
+        Console.WriteLine($"AAD Id:\t{myProfile.Id}");
+        Console.WriteLine($"AAD Id:\t{myProfile}");
+    }
+}
