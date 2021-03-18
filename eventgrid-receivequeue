@@ -1,0 +1,46 @@
+using System;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Azure.ServiceBus;
+
+namespace sbrecv
+{
+    public class Program
+    {
+        const string svcbusConnectionString ="Endpoint=sb://az204msgdemo.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=ByRL9ELAcvhiVvcV2Vk4bEQH3jyo431q/sfMJDJ1d6g=";
+        const string queueName = "sendqueue";
+        static IQueueClient queueClient;
+
+        public static async Task Main(string[] args)
+        {
+            queueClient = new QueueClient(svcbusConnectionString,queueName);
+            Console.WriteLine("Connecting...");
+            ReadMessageAsync();
+            Console.ReadLine();
+            await queueClient.CloseAsync();
+        }
+
+        public static void ReadMessageAsync()
+        {
+            var messageHandlerOptions = new MessageHandlerOptions(ExceptionReceivedHandler)
+            {
+                MaxConcurrentCalls = 1,
+                AutoComplete = false
+            };
+            queueClient.RegisterMessageHandler(ProcessMessageAsync,messageHandlerOptions);
+        }
+
+        public static async Task ProcessMessageAsync(Message message, CancellationToken Token)
+        {
+            Console.WriteLine("{0} ", Encoding.UTF8.GetString(message.Body));
+            await queueClient.CompleteAsync(message.SystemProperties.LockToken);
+        }
+
+        public static Task ExceptionReceivedHandler(ExceptionReceivedEventArgs ex)
+        {
+            Console.WriteLine("error");
+            return Task.CompletedTask;
+        }
+    }
+}
