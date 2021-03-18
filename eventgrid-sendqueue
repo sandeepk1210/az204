@@ -1,0 +1,43 @@
+using System;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Azure.ServiceBus;
+
+namespace svrbus
+{
+    public class Program
+    {
+        const string svcbusConnectionString ="Endpoint=sb://az204msgdemo.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=ByRL9ELAcvhiVvcV2Vk4bEQH3jyo431q/sfMJDJ1d6g=";
+        const string queueName = "sendqueue";
+        static IQueueClient queueClient;
+
+        public static async Task Main(string[] args)
+        {
+            const int numbers = 10;
+            queueClient = new QueueClient(svcbusConnectionString,queueName);
+            Console.WriteLine("Connecting...");
+            await SendMessageAsync(numbers);
+
+        }
+
+        public static async Task SendMessageAsync(int message)
+        {
+            try
+            {
+                for(var i = 0; i < message; i++)
+                {
+                    string body = $"Hello Message {i}";
+                    var msg = new Message(Encoding.UTF8.GetBytes(body));
+                    await queueClient.SendAsync(msg);
+                }
+                Console.WriteLine("Sending...");
+                
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+    }
+}
