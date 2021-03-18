@@ -1,0 +1,69 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/sandeepk1210/Documents/STUDY/AZURE/AZ-204/Labs/demo12/demo12.csproj": {}
+  },
+  "projects": {
+    "/Users/sandeepk1210/Documents/STUDY/AZURE/AZ-204/Labs/demo12/demo12.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/sandeepk1210/Documents/STUDY/AZURE/AZ-204/Labs/demo12/demo12.csproj",
+        "projectName": "demo12",
+        "projectPath": "/Users/sandeepk1210/Documents/STUDY/AZURE/AZ-204/Labs/demo12/demo12.csproj",
+        "packagesPath": "/Users/sandeepk1210/.nuget/packages/",
+        "outputPath": "/Users/sandeepk1210/Documents/STUDY/AZURE/AZ-204/Labs/demo12/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/sandeepk1210/.config/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "Microsoft.ApplicationInsights.AspNetCore": {
+              "target": "Package",
+              "version": "[2.17.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.201/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
